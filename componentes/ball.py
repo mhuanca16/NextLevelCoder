@@ -1,10 +1,10 @@
 import pygame
-import  random
+import random
 from utils.constants import (BLACK, SCREEN_WIDTH, SCREEN_HEIGHT, IMG_DIR)
-from  os import path
+from os import path
 
 #velocidad permitida
-allowed_speed = list(range(3,7))
+allowed_speed = list(range(3, 7))
 
 class Ball(pygame.sprite.Sprite):
     def __init__(self, size):

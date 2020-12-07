@@ -1,8 +1,10 @@
 import pygame
-from  os import path
+from os import path
 from componentes.player import Player
-from  componentes.ball import Ball
-from  utils.text_utils import ( draw_text)
+from componentes.ball import Ball
+from componentes.bullet import Bullet
+from componentes.powerup import Powerup
+from utils.text_utils import (draw_text)
 from utils.constants import (
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
@@ -36,10 +38,16 @@ class Game:
             self.balls = pygame.sprite.Group()
             self.player = Player(self)
             self.all_sprites.add(self.player)
+            self.powerups = pygame.sprite.Group()
 
             ball = Ball(1)
             self.all_sprites.add(ball)
             self.balls.add(ball)
+
+            #cae la bolita de poder
+            powerup = Powerup()
+            self.all_sprites.add(powerup)
+            self.powerups.add(powerup)
 
 
 
@@ -48,13 +56,21 @@ class Game:
             hits = pygame.sprite.spritecollide(self.player, self.balls, False)
             if hits:
                 self.playing = False
-            hits = pygame.sprite.groupcollide( self.balls, self.player.bullets, True, True)
+            hits = pygame.sprite.groupcollide(self.balls, self.player.bullets, True, True)
             for hit in hits:
                 if hit.size < 4:
-                    for i in range (0, 2):
+                    for i in range(0, 2):
                         ball = Ball(hit.size + 1)
                         self.all_sprites.add(ball)
                         self.balls.add(ball)
+
+            power = pygame.sprite.spritecollide(self.player, self.powerups, True)
+            if power:
+                self.player.extraBalas(5)
+
+
+
+
 
 
         def events(self):
@@ -66,6 +82,8 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.player.shoot()
+
+
 
 
         def draw(self):

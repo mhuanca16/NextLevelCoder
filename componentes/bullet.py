@@ -1,6 +1,6 @@
 import pygame
 from utils.constants import (RED, BLACK, SCREEN_HEIGHT, SCREEN_WIDTH, IMG_DIR)
-from  os import path
+from os import path
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)

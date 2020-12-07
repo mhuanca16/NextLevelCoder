@@ -1,16 +1,18 @@
 import pygame
-from  utils.constants import (
+from utils.constants import (
     BLACK,
-    SCREEN_HEIGHT,SCREEN_WIDTH,
+    SCREEN_HEIGHT, SCREEN_WIDTH,
     IMG_DIR
 )
-from  componentes.bullet import  Bullet
-from  os import path
+from componentes.bullet import Bullet
+from componentes.powerup import Powerup
+from componentes.ball import Ball
+from os import path
 
 class Player(pygame.sprite.Sprite):
 
     #constructor
-    def __init__(self,game):
+    def __init__(self, game):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
         self.image = pygame.image.load(path.join(IMG_DIR, "alien.png")).convert( )
@@ -32,7 +34,6 @@ class Player(pygame.sprite.Sprite):
         if key[pygame.K_LEFT]:
             self.rect.x -= 5
 
-
         if self.rect.right >= SCREEN_WIDTH :
             self.rect.right = SCREEN_WIDTH
         if self.rect.left <= 0:
@@ -41,6 +42,24 @@ class Player(pygame.sprite.Sprite):
     def shoot(self):
         bullet = Bullet(self.rect.centerx, self.rect.top)
         self.game.all_sprites.add(bullet)
-
         self.bullets.add(bullet)
+
+       # bullet1 = Bullet(self.rect.centerx + 10, self.rect.top)
+       # self.game.all_sprites.add(bullet1)
+       # self.bullets.add(bullet1)
+       # bullet2 = Bullet(self.rect.centerx + 20, self.rect.top)
+       # self.game.all_sprites.add(bullet2)
+       # self.bullets.add(bullet2)
+
+    def extraBalas(self, numeroDeBalas):
+        #powerup = Powerup()
+        #self.game.all_sprites.add(powerup)
+        for y in range(0, 4):
+            for i in range(0, numeroDeBalas):
+                bullet = Bullet(self.rect.centerx + (i * 10), self.rect.top)
+                self.game.all_sprites.add(bullet)
+                self.bullets.add(bullet)
+
+
+
 
